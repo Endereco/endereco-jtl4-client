@@ -1,0 +1,22 @@
+@import '../js-sdk/themes/default-theme.scss';
+
+.endereco-status-wrapper-list {
+    list-style: inside;
+    margin-bottom: 1rem;
+    color: #8a6d3b;
+    list-style: none;
+    clear: both;
+    font-size: 12px;
+    padding-top: 5px;
+    text-transform: initial;
+    line-height: 1.42857143;
+
+    &__item {
+        &--email_syntax_error,
+        &--email_cant_receive,
+        &--email_no_mx {
+            color: #a94442;
+            list-style: none;
+        }
+    }
+}
