@@ -14,7 +14,7 @@ du korrekte Kundendaten und erleichterst deinen Kunden die Adresseingabe auf Sma
 - Autocomplete / Auto Vervollständigung / Eingabe Assistent für PLZ, Ort, Strasse
 - E-Mail Prüfung auf Format und Erreichbarkeit des Postfaches sowie gültiger Länderdomains
 - Anredeprüfung mit automatischem Setzen der richtigen Anrede wenn eindeutig
-- Unterdrückung des Autofillls für Adressen für viele Browser - um Fehleingaben zu vermeiden
+- Unterdrückung des Autofillls für Adressen für viele Browser um Fehleingaben zu vermeiden
 - Server zu Server Kommunikation - 100% Cookiefrei - keine Aufnahme in die Cookie Richtlinie notwendig
 - DSGVO Konform / Gbpr compliant
 - Optionale einmalige Prüfung von Bestandskunden nach Login - vor der Bestellung

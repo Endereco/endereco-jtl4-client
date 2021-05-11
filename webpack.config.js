@@ -7,7 +7,7 @@ module.exports = {
     'endereco': './endereco.js',
   },
   output: {
-    path: path.resolve(__dirname, './version/100/frontend/js/'),
+    path: path.resolve(__dirname, './version/101/frontend/js/'),
     publicPath: '/',
     filename: 'endereco.min.js'
   },

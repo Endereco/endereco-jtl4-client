@@ -4,13 +4,16 @@
     <Description>Optimiert die Stammdaten Ihrer Kunden: korrigiert und normiert die Adressen, unterstützt bei der Eingabe der Adresse und der E-Mail Adresse.</Description>
     <Author>Ilja Weber</Author>
     <URL>https://www.endereco.de</URL>
-    <XMLVersion>100</XMLVersion>
+    <XMLVersion>101</XMLVersion>
     <Shop4Version>400</Shop4Version>
     <PluginID>endereco_jtl4_client</PluginID>
     <Install>
         <Version nr="100">
             <CreateDate>2020-03-04</CreateDate>
             <SQL>install-100.sql</SQL>
+        </Version>
+        <Version nr="101">
+            <CreateDate>2021-04-22</CreateDate>
         </Version>
         <Hooks>
             <Hook id="10">10_endereco_jtl4_client.php</Hook>
@@ -38,6 +41,24 @@
                 <Name>endereco_jtl4_client_popup_subline</Name>
             </Variable>
             <Variable>
+                <VariableLocalized iso="GER">Ihre Adresse konnte nicht verifiziert werden. Bitte prüfen Sie Ihre Eingabe und ändern oder bestätigen sie.</VariableLocalized>
+                <VariableLocalized iso="ENG">Your address could not be verified. Please check and edit or confirm it.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_popup_subline_not_found</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Ihre Adresse konnte nicht verifiziert werden. Bitte prüfen Sie Ihre Eingabe und ändern oder bestätigen sie.</VariableLocalized>
+                <VariableLocalized iso="ENG">Your address could not be verified. Please check and edit or confirm it.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_mistake_no_predictions_subline</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Ich bestätige, dass meine Adresse korrekt und zustellbar ist.</VariableLocalized>
+                <VariableLocalized iso="ENG">I confirm, that my address is correct and deliverable.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_confirm_my_address_checkout</Name>
+            </Variable>
+            <Variable>
                 <VariableLocalized iso="GER">Ihre Eingabe:</VariableLocalized>
                 <VariableLocalized iso="ENG">Your entry:</VariableLocalized>
                 <Description></Description>
@@ -60,6 +81,18 @@
                 <VariableLocalized iso="ENG">Use selected address</VariableLocalized>
                 <Description></Description>
                 <Name>endereco_jtl4_client_use_selected</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Adresse bearbeiten</VariableLocalized>
+                <VariableLocalized iso="ENG">Edit address</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_edit_address</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Adresse bestätigen</VariableLocalized>
+                <VariableLocalized iso="ENG">Confirm address</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_confirm_address</Name>
             </Variable>
             <Variable>
                 <VariableLocalized iso="GER">Adresse prüfen</VariableLocalized>
@@ -113,147 +146,257 @@
                 <Description></Description>
                 <Name>endereco_jtl4_client_status_email_no_mx</Name>
             </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Keine Hausnummer enthalten.</VariableLocalized>
+                <VariableLocalized iso="ENG">No house number included.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_status_error_building_number_is_missing</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Diese Hausnummer wurde nicht gefunden.</VariableLocalized>
+                <VariableLocalized iso="ENG">This house number could not be found.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_status_error_building_number_not_found</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Die Schreibweise der Straße ist fehlerhaft.</VariableLocalized>
+                <VariableLocalized iso="ENG">The spelling of the street is incorrect.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_status_error_street_name_needs_correction</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Die Schreibweise des Ortes ist fehlerhaft.</VariableLocalized>
+                <VariableLocalized iso="ENG">The spelling of the locality is incorrect.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_status_error_locality_needs_correction</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Die PLZ ist ungültig.</VariableLocalized>
+                <VariableLocalized iso="ENG">The postal code is invalid.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_status_error_postal_code_needs_correction</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Die eingegebene Adresse wurde in einem anderen Land gefunden.</VariableLocalized>
+                <VariableLocalized iso="ENG">The entered address was found in another country.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_status_error_country_code_needs_correction</Name>
+            </Variable>
+            <Variable>
+                <VariableLocalized iso="GER">Falsche Adressen können zu Problemen in der Zustellung führen und weitere Kosten verursachen.</VariableLocalized>
+                <VariableLocalized iso="ENG">Incorrect addresses can lead to problems in delivery and cause further costs.</VariableLocalized>
+                <Description></Description>
+                <Name>endereco_jtl4_client_faulty_address_warning</Name>
+            </Variable>
         </Locales>
         <Adminmenu>
             <Settingslink sort="1">
                 <Name>Einstellungen</Name>
-                <Setting type="text" initialValue="" sort="0" conf="N">
+                <Setting type="text" initialValue="" sort="10" conf="N">
                     <Name>Zugangsdaten</Name>
                     <ValueName>Spacer</ValueName>
                     <Description></Description>
                 </Setting>
-                <Setting type="text" initialValue="" sort="1" conf="Y">
+                <Setting type="text" initialValue="" sort="11" conf="Y">
                     <Name>
                         API Schlüssel
-                        <![CDATA[<br><small>Hier <a href="#">anfragen</a></small>]]>
+                        <![CDATA[<br><small>Hier <a href="https://share.hsforms.com/1YFPrfNc2Qoy3mU6lq65ugw3e78w" target="_blank">anfragen</a></small>]]>
                     </Name>
                     <Description>
                         <![CDATA[Den API Key kannst du entweder über die Website von Endereco (<a href="https://www.endereco.de" target="_blank">www.endereco.de</a>) eine Anfrage erstellen oder über eine E-Mail an <a href="mailto:info@endereco.de">info@endereco.de</a> anfragen.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_api_key</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="https://endereco-service.de/rpc/v1" sort="2" conf="Y">
+                <Setting type="text" initialValue="https://endereco-service.de/rpc/v1" sort="12" conf="Y">
                     <Name>Service URL</Name>
                     <Description>
                         <![CDATA[Hier sollte nur die Live URL in den ausgelieferten Modulen hinterlegt werden.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_remote_url</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="" sort="3" conf="N">
+                <Setting type="text" initialValue="" sort="20" conf="N">
                     <Name>Adress-Services Konfiguration</Name>
                     <ValueName>Spacer</ValueName>
                     <Description></Description>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="6" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="21" conf="Y">
                     <Name>Adressprüfung und Eingabe-Assistent aktivieren</Name>
                     <Description>
                         <![CDATA[Mit dieser Einstellung wird bestimmt, ob der die Adressprüfung und Eingabe-Assistent im Frontend ausgeführt werden sollen. Ist sie inaktiv, so werden während der Eingabe keine Adressen geprüft.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_ams_active</ValueName>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="6" conf="Y">
-                    <Name>Ergebnis der Adressprüfung ins Kommetarfeld der Bestellung schreiben</Name>
-                    <ValueName>endereco_jtl4_client_ams_to_comment</ValueName>
+                <Setting type="checkbox" initialValue="on" sort="22" conf="Y">
+                    <Name>Das Schließen des Modals erlauben</Name>
                     <Description>
-                        <![CDATA[Der Ergebnis der Prüfung wird interpretiert und in lesbarer Form im Kommetarfeld der Bestellung gespeichert. Später ist dieser Kommentar in der WaWi sichtbar.]]>
+                        <![CDATA[Ist diese Einstellung aktiv, so kann ein Käufer das Adresskorrekturmodal schließen ohne eine Entscheidung darüber zu treffen, ob unser vorschlag oder seine Schreibweise der Adresse richtig ist. Das erschwert in späteren Verarbeitung eine eindeutige Zuordnung der Adresse und kann den manuellen Aufwand erhöhen. ]]>
                     </Description>
+                    <ValueName>endereco_jtl4_client_allow_close_modal</ValueName>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="6" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="23" conf="Y">
                     <Name>Auch Bestandskunden einmalig prüfen</Name>
                     <Description>
                         <![CDATA[Bestandskunden, die noch nicht geprüft wurden, werden bei einem Login und Aufruf einer Adressformular-Seite automatisch geprüft.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_check_existing</ValueName>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="9" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="24" conf="Y">
                     <Name>Felder bei nur einem verbleibenden Adressvorschlag automatisch ausfüllen (SmartAutocomplete)</Name>
                     <Description>
                         <![CDATA[Wenn während der Eingabe von Postleitzahl, Ort oder der Straße die Eingabe eindeutig ist (nur ein Vorschlag), wird diese Eingabe in das Eingabefeld automatisch übernommen und die Eingabe für 1 Sekunde blockiert, damit der Nutzer es merken kann. Löscht der Nutzer seine Eingabe, wird der SmartAutocomplete für seine Session deaktiviert.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_smart_fill</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="" sort="10" conf="N">
+                <Setting type="checkbox" initialValue="" sort="25" conf="Y">
+                    <Name>PayPal Express Kunden prüfen (BETA)</Name>
+                    <Description>
+                        <![CDATA[ Kunden, die mit PayPal Express bezahlen, gehen nicht durch den Checkout und werden normalerweise nicht geprüft. Wenn dieses Feature aktiv ist, dann werden die PayPal Express Kunden beim betreten der Checkout/Confirm Seite geprüft und ggf. dazu aufgeordert ihre Adresse zu korrigieren. ]]>
+                    </Description>
+                    <ValueName>endereco_jtl4_client_check_paypalexpress</ValueName>
+                </Setting>
+                <Setting type="checkbox" initialValue="" sort="26" conf="Y">
+                    <Name>Kunde muss eine fehlerhafte Adresse mit einer Checkbox bestätigen</Name>
+                    <Description>
+                        <![CDATA[ Falls Endereco eine Adresse als fehlerhaft bzw. korrekturbedürftig einstuft, aber der Käufer trotzdem auf seiner Schreibweise besteht, wird er dazu gefordert, diese mit einer Checkbox zu bestätigen. ]]>
+                    </Description>
+                    <ValueName>endereco_jtl4_client_confirm_with_checkbox</ValueName>
+                </Setting>
+                <Setting type="text" initialValue="" sort="30" conf="N">
+                    <Name>Hinweise für JTL-WaWi. Statuscode Mapping.</Name>
+                    <ValueName>Spacer</ValueName>
+                    <Description></Description>
+                </Setting>
+                <Setting type="checkbox" initialValue="on" sort="31" conf="Y">
+                    <Name>Ergebnis der Adressprüfung ins Kommetarfeld der Bestellung schreiben</Name>
+                    <ValueName>endereco_jtl4_client_ams_to_comment</ValueName>
+                    <Description>
+                        <![CDATA[Der Ergebnis der Prüfung wird interpretiert und in lesbarer Form im Kommentarfeld der Bestellung gespeichert. Später ist dieser Kommentar in der WaWi sichtbar.]]>
+                    </Description>
+                </Setting>
+                <Setting type="text" initialValue="Lieferadresse ist korrekt. Label kann generiert werden. " sort="32" conf="Y">
+                    <Name>Adresse ist 100% korrekt. (address_correct)</Name>
+                    <Description></Description>
+                    <ValueName>endereco_jtl4_client_wawi_address_correct</ValueName>
+                </Setting>
+                <Setting type="text" initialValue="Lieferadresse ist korrekturbedürftig. Siehe Korrekturvorschlag. " sort="33" conf="Y">
+                    <Name>Adresse hat Fehler oder nicht normierte Schreibweise. (address_needs_correction)</Name>
+                    <Description></Description>
+                    <ValueName>endereco_jtl4_client_wawi_address_needs_correction</ValueName>
+                </Setting>
+                <Setting type="text" initialValue="Lieferadresse ist nicht korrigierbar. Die Hausnummer liegt nicht im bekannten Bereich. Bitte den Käufer kontaktieren. " sort="34" conf="Y">
+                    <Name>Hausnummer liegt außerhalb des bekannten Bereichs. (building_number_not_found)</Name>
+                    <Description></Description>
+                    <ValueName>endereco_jtl4_client_wawi_building_number_not_found</ValueName>
+                </Setting>
+                <Setting type="text" initialValue="Lieferadresse ist nicht korrigierbar. Die Hausnummer fehlt. Bitte den Käufer kontaktieren. " sort="35" conf="Y">
+                    <Name>Hausnummer fehlt oder wurde im falschen Feld übermittelt. (building_number_is_missing)</Name>
+                    <Description></Description>
+                    <ValueName>endereco_jtl4_client_wawi_building_number_is_missing</ValueName>
+                </Setting>
+                <Setting type="text" initialValue="Lieferadresse konnte nicht verifiziert werden. Möglicher Betrugsversuch. Bitte sorgfältig prüfen und den Käufer kontaktieren. " sort="36" conf="Y">
+                    <Name>Adresse konnte nicht verifiziert werden. (address_not_found)</Name>
+                    <Description></Description>
+                    <ValueName>endereco_jtl4_client_wawi_address_not_found</ValueName>
+                </Setting>
+                <Setting type="text" initialValue="Lieferadresse ist mehrdeutig. Bitte den Käufer kontaktieren. " sort="37" conf="Y">
+                    <Name>Die Adresse ist fehlerhaft, nach der Korrektur gibt es aber mehrere gleichwertige Varianten. (address_multiple_variants)</Name>
+                    <Description></Description>
+                    <ValueName>endereco_jtl4_client_wawi_address_multiple_variants</ValueName>
+                </Setting>
+                <Setting type="text" initialValue="Bestätigt durch den Käufer. " sort="38" conf="Y">
+                    <Name>Der Käufer hat diese Adresse im Adressmodal von Endereco ausgewählt. (address_selected_by_customer)</Name>
+                    <Description></Description>
+                    <ValueName>endereco_jtl4_client_wawi_address_selected_by_customer</ValueName>
+                </Setting>
+                <Setting type="text" initialValue="Korrektur wurde automatisch übernommen. " sort="39" conf="Y">
+                    <Name>Kleinkorrektur, die automatisch übernommen wurde. (address_selected_automatically)</Name>
+                    <Description></Description>
+                    <ValueName>endereco_jtl4_client_wawi_address_selected_automatically</ValueName>
+                </Setting>
+
+
+                <Setting type="text" initialValue="" sort="40" conf="N">
                     <Name>E-Mail Service</Name>
                     <ValueName>Spacer</ValueName>
                     <Description></Description>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="11" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="41" conf="Y">
                     <Name>E-Mail Adressprüfung aktivieren</Name>
                     <Description>
                         <![CDATA[Hiermit wird bestimmt, ob die E-Mail Adresse geprüft werden soll. Wir prüfen die Schreibweise (Syntax) der E-Mail, den Host und ob die E-Mailadresse tatsächlich existiert. Zusätzlich wird überprüft ob E-Mails zustellbar sind.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_es_active</ValueName>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="11" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="42" conf="Y">
                     <Name>E-Mail Statusmeldungen anzeigen</Name>
                     <Description>
                         <![CDATA[Diese Einstellung bestimmt, ob unterhalb des E-Mail-Eingabefeldes die Fehlermeldungen in Textform angezeigt werden sollen.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_show_email_status</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="" sort="12" conf="N">
+                <Setting type="text" initialValue="" sort="50" conf="N">
                     <Name>Anredeprüfung</Name>
                     <ValueName>Spacer</ValueName>
                     <Description></Description>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="13" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="51" conf="Y">
                     <Name>Anredeprüfung basierend auf dem Vornamen aktivieren und Anrede automatisch setzen</Name>
                     <Description>
                         <![CDATA[Wenn nach der Eingabe des Vornamens keine Anrede ausgewählt ist und der Vorname einem Geschlecht eindeutig zugeordnet werden kann, dann setzen wir die Anrede. Ansonsten markieren wir die Anrede als richtig (grün) oder möglicherweise fehlerhaft (orange).]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_ps_active</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="" sort="14" conf="N">
+                <Setting type="text" initialValue="" sort="60" conf="N">
                     <Name>Designanpassungen</Name>
                     <ValueName>Spacer</ValueName>
                     <Description></Description>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="15" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="61" conf="Y">
                     <Name>Standard-CSS nutzen</Name>
                     <Description>
                         <![CDATA[Unser Modul liefert im Standardfall alle benötigte Styles. Falls man diese jedoch wesentlich überarbeiten möchte, kann man mit dieser Einstellung die Styles deaktivieren. Dadurch entstehen später keine CSS-Konflikte.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_use_standart_css</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="" sort="16" conf="Y">
+                <Setting type="text" initialValue="" sort="62" conf="Y">
                     <Name>Hauptfarbe im Dropdown</Name>
                     <ValueName>endereco_jtl4_client_color_1</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="" sort="17" conf="Y">
+                <Setting type="text" initialValue="" sort="63" conf="Y">
                     <Name>Fehlerfarbe im Modal</Name>
                     <ValueName>endereco_jtl4_client_color_2</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="" sort="18" conf="Y">
+                <Setting type="text" initialValue="" sort="64" conf="Y">
                     <Name>Auswahlfarbe im Modal</Name>
                     <ValueName>endereco_jtl4_client_color_3</ValueName>
                 </Setting>
-                <Setting type="text" initialValue="" sort="19" conf="N">
+                <Setting type="text" initialValue="" sort="70" conf="N">
                     <Name>Entwicklereinstellungen</Name>
                     <ValueName>Spacer</ValueName>
                     <Description></Description>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="20" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="71" conf="Y">
                     <Name>Adressprüfung beim Absenden des Formulars auslösen</Name>
                     <Description>
                         <![CDATA[Über diese Einstellung wird bestimmt, dass beim Klicken auf "Absenden" oder betätigen der Enter-Taste die Adresse geprüft werden soll. Diese Funktion kann man deaktivieren, wenn man programmiertechnisch den Zeitpunkt der Prüfung selber steuern möchte.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_onsubmit_trigger</ValueName>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="21" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="72" conf="Y">
                     <Name>Adressprüfung sofort nach verlassen des Hausnummern Feldes auslösen</Name>
                     <Description>
                         <![CDATA[Ist die Funktion aktiv, wird die Adressprüfung sofort nach Eingabe der Adresse angestoßen. Ist die deaktiviert, erfolg die Prüfung beim Klick auf den "Weiter" Button.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_onblur_trigger</ValueName>
                 </Setting>
-                <Setting type="checkbox" initialValue="on" sort="22" conf="Y">
+                <Setting type="checkbox" initialValue="on" sort="73" conf="Y">
                     <Name>Das Absenden des Formulars nach der Adressauswahl fortsetzen</Name>
                     <Description>
                         <![CDATA[Mit dieser Einstellung wird bestimmt, ob nach der Auswahl und Übernahme einer Adresse das Absenden der Form fortgesetzt wird oder ob der Nutzer noch mal auf "Absenden" klicken muss.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_resume_submit</ValueName>
                 </Setting>
-                <Setting type="checkbox" initialValue="" sort="23" conf="Y">
+                <Setting type="checkbox" initialValue="" sort="74" conf="Y">
                     <Name>Debuginformationen in der Browserkonsole ausgeben</Name>
                     <Description>
                         <![CDATA[Hierüber bestimmt man, ob das Modul die Debuginformation in der Browser Konsole ausgibt. Nützlich für Debugzwecke.]]>
@@ -262,12 +405,5 @@
                 </Setting>
             </Settingslink>
         </Adminmenu>
-        <JS>
-            <file>
-                <name>endereco.min.js</name>
-                <priority>8</priority>
-                <position>body</position>
-            </file>
-        </JS>
     </Install>
 </jtlshop3plugin>

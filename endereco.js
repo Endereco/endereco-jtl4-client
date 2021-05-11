@@ -80,19 +80,26 @@ window.EnderecoIntegrator.asyncCallbacks.forEach(function(cb) {
 window.EnderecoIntegrator.asyncCallbacks = [];
 
 window.EnderecoIntegrator.waitUntilReady().then( function() {
-    if (
-        $ &&
-        $('[name="ort"]') &&
-        $('[name="ort"]').typeahead
-    ) {
-        $('[name="ort"]').typeahead('destroy');
-    }
-    if (
-        $ &&
-        $('[name="register[shipping_address][ort]"]') &&
-        $('[name="register[shipping_address][ort]"]').typeahead
-    ) {
-        $('[name="register[shipping_address][ort]"]').typeahead('destroy');
-    }
+    var $removeTypeahead = setInterval( function() {
+        if (
+            $ &&
+            $('[name="ort"]').length &&
+            $('[name="ort"]')[0].classList.contains('tt-input')
+        ) {
+            $('.city_input').typeahead('destroy');
+            clearInterval($removeTypeahead);
+        }
+    }, 100);
+
+    var $removeTypeahead2 = setInterval( function() {
+        if (
+            $ &&
+            $('[name="register[shipping_address][ort]"]').length &&
+            $('[name="register[shipping_address][ort]"]').typeahead
+        ) {
+            $('[name="register[shipping_address][ort]"]').typeahead('destroy');
+            clearInterval($removeTypeahead2);
+        }
+    }, 100);
 });
 
