@@ -200,10 +200,10 @@
                 <Setting type="text" initialValue="" sort="11" conf="Y">
                     <Name>
                         API Schlüssel
-                        <![CDATA[<br><small>Hier <a href="https://share.hsforms.com/1YFPrfNc2Qoy3mU6lq65ugw3e78w" target="_blank">anfragen</a></small>]]>
+                        <![CDATA[<br><small>Hier <a href="https://www.endereco.de/jtl" target="_blank">anfragen</a></small>]]>
                     </Name>
                     <Description>
-                        <![CDATA[Den API Key kannst du entweder über die Website von Endereco (<a href="https://www.endereco.de" target="_blank">www.endereco.de</a>) eine Anfrage erstellen oder über eine E-Mail an <a href="mailto:info@endereco.de">info@endereco.de</a> anfragen.]]>
+                        <![CDATA[Den API Key kannst du entweder über die Website von Endereco (<a href="https://www.endereco.de/jtl" target="_blank">www.endereco.de/jtl</a>) eine Anfrage erstellen oder über eine E-Mail an <a href="mailto:info@endereco.de">info@endereco.de</a> anfragen.]]>
                     </Description>
                     <ValueName>endereco_jtl4_client_api_key</ValueName>
                 </Setting>
